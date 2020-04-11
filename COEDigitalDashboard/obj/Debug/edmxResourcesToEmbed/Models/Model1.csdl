@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CostCenter">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CostCenterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CostCenterDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CapacityFTEs" Type="Double" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine" Relationship="Self.FK_CostCenter_ServiceLine_CostCenter" FromRole="CostCenter" ToRole="CostCenter_ServiceLine" />
+  </EntityType>
+  <EntityType Name="CostCenter_ServiceLine">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_CostCenter" Type="Int32" Nullable="false" />
+    <Property Name="FK_ServiceLine" Type="Int32" Nullable="false" />
+    <Property Name="CostCenterServiceLineDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TotalFTEs" Type="Int32" Nullable="false" />
+    <Property Name="ReportingFTEs" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter" Relationship="Self.FK_CostCenter_ServiceLine_CostCenter" FromRole="CostCenter_ServiceLine" ToRole="CostCenter" />
+    <NavigationProperty Name="CostCenter_ServiceLine_KPIs" Relationship="Self.FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine" FromRole="CostCenter_ServiceLine" ToRole="CostCenter_ServiceLine_KPIs" />
+    <NavigationProperty Name="ServiceLine" Relationship="Self.FK_CostCenter_ServiceLine_ServiceLines" FromRole="CostCenter_ServiceLine" ToRole="ServiceLines" />
+    <NavigationProperty Name="CostCenterKPIsTargets" Relationship="Self.FK_CostCenterKPIsTarget_CostCenter_ServiceLine" FromRole="CostCenter_ServiceLine" ToRole="CostCenterKPIsTarget" />
+  </EntityType>
+  <EntityType Name="CostCenter_ServiceLine_KPIs">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_CostCenterServiceline" Type="Int32" Nullable="false" />
+    <Property Name="FK_KPI" Type="Int32" Nullable="false" />
+    <Property Name="FK_FiscalYear" Type="Int32" Nullable="false" />
+    <Property Name="KPIDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="KPIReportingFTEs" Type="Double" />
+    <Property Name="Target" Type="Double" Nullable="false" />
+    <Property Name="Value" Type="Double" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine" Relationship="Self.FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine" FromRole="CostCenter_ServiceLine_KPIs" ToRole="CostCenter_ServiceLine" />
+    <NavigationProperty Name="FiscalYear" Relationship="Self.FK_CostCenter_ServiceLine_KPIs_FiscalYear" FromRole="CostCenter_ServiceLine_KPIs" ToRole="FiscalYear" />
+    <NavigationProperty Name="KPI" Relationship="Self.FK_CostCenterKPIs_KPI" FromRole="CostCenter_ServiceLine_KPIs" ToRole="KPI" />
+  </EntityType>
+  <EntityType Name="CostCenterKPIsTarget">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_CostCenterServiceLine" Type="Int32" Nullable="false" />
+    <Property Name="FK_KPI" Type="Int32" Nullable="false" />
+    <Property Name="FK_FiscalYear" Type="Int32" Nullable="false" />
+    <Property Name="KPIReportingFTEs" Type="Double" />
+    <Property Name="Target" Type="Double" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine" Relationship="Self.FK_CostCenterKPIsTarget_CostCenter_ServiceLine" FromRole="CostCenterKPIsTarget" ToRole="CostCenter_ServiceLine" />
+    <NavigationProperty Name="KPI" Relationship="Self.FK_CostCenterKPIs" FromRole="CostCenterKPIsTarget" ToRole="KPI" />
+    <NavigationProperty Name="FiscalYear" Relationship="Self.FK_CostCenterKPIsTarget_FiscalYear" FromRole="CostCenterKPIsTarget" ToRole="FiscalYear" />
+  </EntityType>
+  <EntityType Name="FiscalYear">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FiscalYearName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine_KPIs" Relationship="Self.FK_CostCenter_ServiceLine_KPIs_FiscalYear" FromRole="FiscalYear" ToRole="CostCenter_ServiceLine_KPIs" />
+    <NavigationProperty Name="CostCenterKPIsTargets" Relationship="Self.FK_CostCenterKPIsTarget_FiscalYear" FromRole="FiscalYear" ToRole="CostCenterKPIsTarget" />
+  </EntityType>
+  <EntityType Name="KPI">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_KPICategory" Type="Int32" Nullable="false" />
+    <Property Name="FK_Unit" Type="Int32" />
+    <Property Name="KPIName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KPIDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Formula" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Negative" Type="Byte" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine_KPIs" Relationship="Self.FK_CostCenterKPIs_KPI" FromRole="KPI" ToRole="CostCenter_ServiceLine_KPIs" />
+    <NavigationProperty Name="CostCenterKPIsTargets" Relationship="Self.FK_CostCenterKPIs" FromRole="KPI" ToRole="CostCenterKPIsTarget" />
+    <NavigationProperty Name="KPICategory" Relationship="Self.FK_KPI_KPICategory" FromRole="KPI" ToRole="KPICategory" />
+    <NavigationProperty Name="Unit" Relationship="Self.FK_KPI_Units" FromRole="KPI" ToRole="Units" />
+  </EntityType>
+  <EntityType Name="KPICategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KPICategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="KPIs" Relationship="Self.FK_KPI_KPICategory" FromRole="KPICategory" ToRole="KPI" />
+  </EntityType>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ServiceLines" Relationship="Self.FK_ServiceLines_Leads" FromRole="Leads" ToRole="ServiceLines" />
+  </EntityType>
+  <EntityType Name="MenuMaster">
+    <Key>
+      <PropertyRef Name="MenuIdentity" />
+      <PropertyRef Name="MenuID" />
+      <PropertyRef Name="MenuName" />
+    </Key>
+    <Property Name="MenuIdentity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MenuID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MenuName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Parent_MenuID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="User_Roll" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MenuFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MenuURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USE_YN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="ServiceLine">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fk_Lead" Type="Int32" />
+    <Property Name="ServiceLineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CostCenter_ServiceLine" Relationship="Self.FK_CostCenter_ServiceLine_ServiceLines" FromRole="ServiceLines" ToRole="CostCenter_ServiceLine" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK_ServiceLines_Leads" FromRole="ServiceLines" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="KPIs" Relationship="Self.FK_KPI_Units" FromRole="Units" ToRole="KPI" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vw_CostCenterServicelineDetails">
+    <Key>
+      <PropertyRef Name="ServiceLineID" />
+      <PropertyRef Name="ServiceLineName" />
+      <PropertyRef Name="LeadName" />
+      <PropertyRef Name="CostServiceID" />
+      <PropertyRef Name="CostCenterID" />
+      <PropertyRef Name="CostCenterName" />
+      <PropertyRef Name="CapacityFTEs" />
+      <PropertyRef Name="CostCenterServiceLineFTEs" />
+      <PropertyRef Name="CostCenterServiceLineReportingFTEs" />
+    </Key>
+    <Property Name="ServiceLineID" Type="Int32" Nullable="false" />
+    <Property Name="ServiceLineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LeadName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CostServiceID" Type="Int32" Nullable="false" />
+    <Property Name="CostCenterID" Type="Int32" Nullable="false" />
+    <Property Name="CostCenterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CostCenterServiceLineDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CapacityFTEs" Type="Double" Nullable="false" />
+    <Property Name="CostCenterServiceLineFTEs" Type="Int32" Nullable="false" />
+    <Property Name="CostCenterServiceLineReportingFTEs" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CostCenter_ServiceLine_CostCenter">
+    <End Role="CostCenter" Type="Self.CostCenter" Multiplicity="1" />
+    <End Role="CostCenter_ServiceLine" Type="Self.CostCenter_ServiceLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenter">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenter_ServiceLine">
+        <PropertyRef Name="FK_CostCenter" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine">
+    <End Role="CostCenter_ServiceLine" Type="Self.CostCenter_ServiceLine" Multiplicity="1" />
+    <End Role="CostCenter_ServiceLine_KPIs" Type="Self.CostCenter_ServiceLine_KPIs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenter_ServiceLine">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenter_ServiceLine_KPIs">
+        <PropertyRef Name="FK_CostCenterServiceline" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenter_ServiceLine_ServiceLines">
+    <End Role="ServiceLines" Type="Self.ServiceLine" Multiplicity="1" />
+    <End Role="CostCenter_ServiceLine" Type="Self.CostCenter_ServiceLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceLines">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenter_ServiceLine">
+        <PropertyRef Name="FK_ServiceLine" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenterKPIsTarget_CostCenter_ServiceLine">
+    <End Role="CostCenter_ServiceLine" Type="Self.CostCenter_ServiceLine" Multiplicity="1" />
+    <End Role="CostCenterKPIsTarget" Type="Self.CostCenterKPIsTarget" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CostCenter_ServiceLine">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenterKPIsTarget">
+        <PropertyRef Name="FK_CostCenterServiceLine" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenter_ServiceLine_KPIs_FiscalYear">
+    <End Role="FiscalYear" Type="Self.FiscalYear" Multiplicity="1" />
+    <End Role="CostCenter_ServiceLine_KPIs" Type="Self.CostCenter_ServiceLine_KPIs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FiscalYear">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenter_ServiceLine_KPIs">
+        <PropertyRef Name="FK_FiscalYear" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenterKPIs_KPI">
+    <End Role="KPI" Type="Self.KPI" Multiplicity="1" />
+    <End Role="CostCenter_ServiceLine_KPIs" Type="Self.CostCenter_ServiceLine_KPIs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KPI">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenter_ServiceLine_KPIs">
+        <PropertyRef Name="FK_KPI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenterKPIs">
+    <End Role="KPI" Type="Self.KPI" Multiplicity="1" />
+    <End Role="CostCenterKPIsTarget" Type="Self.CostCenterKPIsTarget" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KPI">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenterKPIsTarget">
+        <PropertyRef Name="FK_KPI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CostCenterKPIsTarget_FiscalYear">
+    <End Role="FiscalYear" Type="Self.FiscalYear" Multiplicity="1" />
+    <End Role="CostCenterKPIsTarget" Type="Self.CostCenterKPIsTarget" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FiscalYear">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CostCenterKPIsTarget">
+        <PropertyRef Name="FK_FiscalYear" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KPI_KPICategory">
+    <End Role="KPICategory" Type="Self.KPICategory" Multiplicity="1" />
+    <End Role="KPI" Type="Self.KPI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KPICategory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KPI">
+        <PropertyRef Name="FK_KPICategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KPI_Units">
+    <End Role="Units" Type="Self.Unit" Multiplicity="0..1" />
+    <End Role="KPI" Type="Self.KPI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Units">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="KPI">
+        <PropertyRef Name="FK_Unit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ServiceLines_Leads">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="0..1" />
+    <End Role="ServiceLines" Type="Self.ServiceLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServiceLines">
+        <PropertyRef Name="Fk_Lead" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Digital_COEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="CostCenters" EntityType="Self.CostCenter" />
+    <EntitySet Name="CostCenter_ServiceLine" EntityType="Self.CostCenter_ServiceLine" />
+    <EntitySet Name="CostCenter_ServiceLine_KPIs" EntityType="Self.CostCenter_ServiceLine_KPIs" />
+    <EntitySet Name="CostCenterKPIsTargets" EntityType="Self.CostCenterKPIsTarget" />
+    <EntitySet Name="FiscalYears" EntityType="Self.FiscalYear" />
+    <EntitySet Name="KPIs" EntityType="Self.KPI" />
+    <EntitySet Name="KPICategories" EntityType="Self.KPICategory" />
+    <EntitySet Name="Leads" EntityType="Self.Lead" />
+    <EntitySet Name="MenuMasters" EntityType="Self.MenuMaster" />
+    <EntitySet Name="ServiceLines" EntityType="Self.ServiceLine" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Units" EntityType="Self.Unit" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="vw_CostCenterServicelineDetails" EntityType="Self.vw_CostCenterServicelineDetails" />
+    <AssociationSet Name="FK_CostCenter_ServiceLine_CostCenter" Association="Self.FK_CostCenter_ServiceLine_CostCenter">
+      <End Role="CostCenter" EntitySet="CostCenters" />
+      <End Role="CostCenter_ServiceLine" EntitySet="CostCenter_ServiceLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine" Association="Self.FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine">
+      <End Role="CostCenter_ServiceLine" EntitySet="CostCenter_ServiceLine" />
+      <End Role="CostCenter_ServiceLine_KPIs" EntitySet="CostCenter_ServiceLine_KPIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenter_ServiceLine_ServiceLines" Association="Self.FK_CostCenter_ServiceLine_ServiceLines">
+      <End Role="ServiceLines" EntitySet="ServiceLines" />
+      <End Role="CostCenter_ServiceLine" EntitySet="CostCenter_ServiceLine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenterKPIsTarget_CostCenter_ServiceLine" Association="Self.FK_CostCenterKPIsTarget_CostCenter_ServiceLine">
+      <End Role="CostCenter_ServiceLine" EntitySet="CostCenter_ServiceLine" />
+      <End Role="CostCenterKPIsTarget" EntitySet="CostCenterKPIsTargets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenter_ServiceLine_KPIs_FiscalYear" Association="Self.FK_CostCenter_ServiceLine_KPIs_FiscalYear">
+      <End Role="FiscalYear" EntitySet="FiscalYears" />
+      <End Role="CostCenter_ServiceLine_KPIs" EntitySet="CostCenter_ServiceLine_KPIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenterKPIs_KPI" Association="Self.FK_CostCenterKPIs_KPI">
+      <End Role="KPI" EntitySet="KPIs" />
+      <End Role="CostCenter_ServiceLine_KPIs" EntitySet="CostCenter_ServiceLine_KPIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenterKPIs" Association="Self.FK_CostCenterKPIs">
+      <End Role="KPI" EntitySet="KPIs" />
+      <End Role="CostCenterKPIsTarget" EntitySet="CostCenterKPIsTargets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CostCenterKPIsTarget_FiscalYear" Association="Self.FK_CostCenterKPIsTarget_FiscalYear">
+      <End Role="FiscalYear" EntitySet="FiscalYears" />
+      <End Role="CostCenterKPIsTarget" EntitySet="CostCenterKPIsTargets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KPI_KPICategory" Association="Self.FK_KPI_KPICategory">
+      <End Role="KPICategory" EntitySet="KPICategories" />
+      <End Role="KPI" EntitySet="KPIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KPI_Units" Association="Self.FK_KPI_Units">
+      <End Role="Units" EntitySet="Units" />
+      <End Role="KPI" EntitySet="KPIs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ServiceLines_Leads" Association="Self.FK_ServiceLines_Leads">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="ServiceLines" EntitySet="ServiceLines" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="USP_Menu_Delete">
+      <Parameter Name="MenuIdentity" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="USP_Menu_Insert" ReturnType="Collection(String)">
+      <Parameter Name="MenuID" Mode="In" Type="String" />
+      <Parameter Name="MenuName" Mode="In" Type="String" />
+      <Parameter Name="Parent_MenuID" Mode="In" Type="String" />
+      <Parameter Name="User_Roll" Mode="In" Type="String" />
+      <Parameter Name="MenuFileName" Mode="In" Type="String" />
+      <Parameter Name="MenuURL" Mode="In" Type="String" />
+      <Parameter Name="USE_YN" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_Menu_Select" ReturnType="Collection(Model.USP_Menu_Select_Result)">
+      <Parameter Name="MenuID" Mode="In" Type="String" />
+      <Parameter Name="MenuName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_Menu_Update" ReturnType="Collection(String)">
+      <Parameter Name="MenuIdentity" Mode="In" Type="Int32" />
+      <Parameter Name="MenuID" Mode="In" Type="String" />
+      <Parameter Name="MenuName" Mode="In" Type="String" />
+      <Parameter Name="Parent_MenuID" Mode="In" Type="String" />
+      <Parameter Name="User_Roll" Mode="In" Type="String" />
+      <Parameter Name="MenuFileName" Mode="In" Type="String" />
+      <Parameter Name="MenuURL" Mode="In" Type="String" />
+      <Parameter Name="USE_YN" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_MenubyUserRole_Select" ReturnType="Collection(Model.USP_MenubyUserRole_Select_Result)">
+      <Parameter Name="Rolename" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="USP_UserRoles_Select">
+      <Parameter Name="Rolename" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="USP_Menu_Select_Result">
+    <Property Type="Int32" Name="MenuIdentity" Nullable="false" />
+    <Property Type="String" Name="MenuID" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="MenuName" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Parent_MenuID" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="User_Roll" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="MenuFileName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="MenuURL" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="USE_YN" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="USP_MenubyUserRole_Select_Result">
+    <Property Type="Int32" Name="MenuIdentity" Nullable="false" />
+    <Property Type="String" Name="MenuID" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="MenuName" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Parent_MenuID" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="User_Roll" Nullable="false" MaxLength="256" />
+    <Property Type="String" Name="MenuFileName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="MenuURL" Nullable="false" MaxLength="500" />
+    <Property Type="String" Name="USE_YN" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>

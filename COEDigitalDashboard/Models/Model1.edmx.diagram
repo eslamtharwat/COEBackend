@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ef98a7c62a9f4e8f91e8b4fc4260ac45" Name="Diagram1" ZoomLevel="10">
+        <EntityTypeShape EntityType="Model.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CostCenter" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CostCenter_ServiceLine" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CostCenter_ServiceLine_KPIs" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CostCenterKPIsTarget" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FiscalYear" Width="1.5" PointX="3" PointY="20" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPI" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.KPICategory" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Lead" Width="1.5" PointX="1.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MenuMaster" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ServiceLine" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Unit" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.vw_CostCenterServicelineDetails" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_CostCenter_ServiceLine_CostCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenter_ServiceLine_KPIs_CostCenter_ServiceLine" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenter_ServiceLine_ServiceLines" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenterKPIsTarget_CostCenter_ServiceLine" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenter_ServiceLine_KPIs_FiscalYear" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenterKPIs_KPI" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenterKPIs" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_CostCenterKPIsTarget_FiscalYear" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_KPI_KPICategory" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_KPI_Units" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_ServiceLines_Leads" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
